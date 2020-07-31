@@ -50,7 +50,7 @@ func init() {
 }
 
 func main() {
-	user, err := users.GetUser(db, 2) // getUser(28)
+	user, err := users.GetUser(db, 27) // getUser(28)
 	if err != nil {
 		//panic(err)
 		fmt.Println("User not found")
