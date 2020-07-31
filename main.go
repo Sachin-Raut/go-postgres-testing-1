@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Sachin-Raut/go-postgres-testing-1/users"
+
 	_ "github.com/lib/pq"
 	"github.com/subosito/gotenv"
 )
@@ -47,27 +49,13 @@ func init() {
 	fmt.Println("database connection successful")
 }
 
-type user struct {
-	ID    int
-	Email string
-}
-
 func main() {
-	user, err := getUser(28)
+	user, err := users.GetUser(db, 2) // getUser(28)
 	if err != nil {
-		panic(err)
+		//panic(err)
+		fmt.Println("User not found")
+		return
 	}
 	fmt.Println(user.ID)
 	fmt.Println(user.Email)
-}
-
-func getUser(id int) (*user, error) {
-	var myuser user
-	row := db.QueryRow("select id, email from users where id= $1", id)
-
-	err := row.Scan(&myuser.ID, &myuser.Email)
-	if err != nil {
-		return nil, err
-	}
-	return &myuser, nil
 }
